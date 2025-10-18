@@ -92,9 +92,10 @@ function ApiForm() {
 
       // すべての出力を処理
       const combinedResult = outputs.map(output => {
-        const uint16array = new Uint16Array(output.buffer);
+        // const uint16array = new Uint16Array(output.buffer);
         // 出力ごとにグリフを生成し、結合
-        return [...uint16array].map(u => String.fromCodePoint(0x2000 + u)).reduce((acc, c) => acc + c, '');
+        // return [...uint16array].map(u => String.fromCodePoint(0x2000 + u)).reduce((acc, c) => acc + c, '');
+        return [...output].map(u=>String.fromCodePoint(0x2600 + u)).reduce((acc, c) => acc + c, '');
       }); // 複数の結果を区切り文字で結合
 
       setApiResult(combinedResult);
