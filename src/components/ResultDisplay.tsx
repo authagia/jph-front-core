@@ -17,14 +17,18 @@ function ResultDisplay({ apiResult, isError, onReset}: ResultDisplayProps) {
         // 結果がない場合は何も表示しない（通常、ApiFormContainerで制御される）
         return null;
     }
-    const [longPressMessage, setLongPressMessage] = useState<string | null>(null);
+    const [longPressPressindex, setLongPressIndex] = useState<number | null>(null);
 
-    const handleLongPress = (index: number, item: DisplayResultItem) => {
+    const handleLongPress = (index: number) => {
         // 元の入力テキストをメッセージに含める
-        const message = `💡 元の入力 ${index + 1}: 「${item.originalText}」`;
-        setLongPressMessage(message);
-        console.log(message);
+        // const message = `💡 元の入力 ${index + 1}: 「${item.originalText}」`;
+        setLongPressIndex(index);
+        console.log(index);
     };
+
+    const handleRelease = () => {
+        setLongPressIndex(-1);
+    }
 
     return (
         <Box>
@@ -53,7 +57,8 @@ function ResultDisplay({ apiResult, isError, onReset}: ResultDisplayProps) {
                         // 🔑 長押しイベントハンドラを生成
                         const longPressProps = useLongPress(
                             // 実行するコールバック関数に item (元の入力とAPI結果のペア) を渡す
-                            () => handleLongPress(index, item),
+                            () => handleLongPress(index),
+                            () => handleRelease(),
                             3000 // 3秒
                         );
 
@@ -68,7 +73,7 @@ function ResultDisplay({ apiResult, isError, onReset}: ResultDisplayProps) {
                                 }}
                             >
                                 {/* 🔑 表示するテキストを apiOutput に変更 */}
-                                {item.apiOutput}
+                                {index==longPressPressindex?item.originalText:item.apiOutput}
                             </Typography>
                         );
                     })}

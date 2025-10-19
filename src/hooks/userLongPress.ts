@@ -9,7 +9,8 @@ import { useRef, useState, useEffect, useCallback } from 'react';
  * @returns Reactのイベントハンドラに渡すPropsのオブジェクト
  */
 export const useLongPress = (
-  callback: () => void,
+  pressed: () => void,
+  released: () => void,
   duration: number = 3000
 ) => {
   // 押下状態を保持するState
@@ -22,10 +23,10 @@ export const useLongPress = (
     setIsPressing(true);
     // 指定時間後にコールバックを実行するタイマーを設定
     timeoutRef.current = setTimeout(() => {
-      callback();
+      pressed();
       setIsPressing(false); // 長押し完了後、押下状態をリセット
     }, duration);
-  }, [callback, duration]);
+  }, [pressed, duration]);
 
   // 押下が終了したときの処理（長押し時間経過前でも呼ばれる）
   const clear = useCallback(() => {
@@ -35,7 +36,8 @@ export const useLongPress = (
     }
     setIsPressing(false);
     timeoutRef.current = null;
-  }, []);
+    released();
+  }, [released]);
 
   // コンポーネントのアンマウント時、および押下状態がリセットされたときもタイマーをクリア
   useEffect(() => {
