@@ -7,6 +7,7 @@ import { type SubmitHandler } from 'react-hook-form';
 // 外部コンポーネントをインポート
 import InputForm from './InputForm';
 import ResultDisplay from './ResultDisplay';
+import { bytesToEmoji } from '../lib/emojiMap256';
 
 // フォームデータの型定義をここで定義し、InputFormと共有します
 export type FormInput = {
@@ -87,7 +88,8 @@ function ApiFormContainer() {
 
             const combinedResult = outputs.map(output => {
                 // 提案されたグリフ生成ロジック
-                return [...output].map(u => String.fromCodePoint(0x2600 + u)).reduce((acc, c) => acc + c, '');
+                // return [...output].map(u => String.fromCodePoint(0x2600 + u)).reduce((acc, c) => acc + c, '');
+                return bytesToEmoji(output.slice(0, 8));
             });
 
 
