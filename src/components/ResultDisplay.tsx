@@ -1,7 +1,7 @@
 // src/components/ResultDisplay.tsx
 import { Box, Typography, Button } from '@mui/material';
 import ReplayIcon from '@mui/icons-material/Replay';
-import { type FormData, type DisplayResultItem } from './ApiFormContainer'; // 🔑 新しい型をインポート
+import { type DisplayResultItem } from './ApiFormContainer'; // 🔑 新しい型をインポート
 import { useLongPress } from '../hooks/userLongPress';
 import { useState } from 'react';
 

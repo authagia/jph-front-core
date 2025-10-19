@@ -14,7 +14,7 @@ export const useLongPress = (
   duration: number = 3000
 ) => {
   // 押下状態を保持するState
-  const [isPressing, setIsPressing] = useState(false);
+  const [, setIsPressing] = useState(false);
   // タイマーIDを保持するRef
   const timeoutRef = useRef<number | null>(null);
 
